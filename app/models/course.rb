@@ -1,5 +1,5 @@
 class Course < ApplicationRecord
-  belongs_to :period
+  # belongs_to :semester
 
   has_many :teacher_assignments
   has_many :account_teachers, through: :teacher_assignments
