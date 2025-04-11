@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  desc: MyText
+  teacher: one
+  period: one
+
+two:
+  name: MyString
+  desc: MyText
+  teacher: two
+  period: two
