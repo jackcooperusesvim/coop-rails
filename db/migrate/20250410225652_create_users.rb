@@ -10,6 +10,6 @@ class CreateUsers < ActiveRecord::Migration[8.0]
       t.timestamps
     end
     add_index :users, :email_address, unique: true
-    add_index :account, [ :account_type, :account_id ]
+    add_index :users, [ :account_type, :account_id ]
   end
 end
