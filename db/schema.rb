@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_11_010954) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_11_014054) do
+  create_table "account_admins", force: :cascade do |t|
+    t.string "name"
+    t.integer "permission_level"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "account_families", force: :cascade do |t|
     t.string "main_parent", null: false
     t.string "sec_parent", null: false
