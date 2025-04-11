@@ -1,6 +1,6 @@
-class CreateTeachers < ActiveRecord::Migration[8.0]
+class CreateAccountTeachers < ActiveRecord::Migration[8.0]
   def change
-    create_table :teachers do |t|
+    create_table :account_teachers do |t|
       t.string :name
       t.integer :phone1
       t.integer :phone2
