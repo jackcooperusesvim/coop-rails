@@ -4,7 +4,10 @@
 
 <div>
   <%= link_to "Edit this family", edit_family_path(@family) %> |
-  <%= link_to "Back to families", families_path %>
+  <% if @account_type = "Family" %>
+  <% else %>
+    <%= link_to "Back to families", families_path %>
+    <%= button_to "Destroy this family", @family, method: :delete %>
+  <% end %>
 
-  <%= button_to "Destroy this family", @family, method: :delete %>
 </div>

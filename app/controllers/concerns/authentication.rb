@@ -4,6 +4,7 @@ module Authentication
   included do
     before_action :require_authentication
     helper_method :authenticated?
+    helper_method :authorized?
   end
 
   class_methods do
@@ -13,6 +14,11 @@ module Authentication
   end
 
   private
+    def authorized?(account_types)
+      resume_session
+      Current.account_type.in(account_types)
+    end
+
     def authenticated?
       resume_session
     end

@@ -1,6 +1,14 @@
 class FamiliesController < ApplicationController
   before_action :set_family, only: %i[ show edit update destroy ]
 
+  before_action only: %i[edit update ] do
+    authorized?(%w[ Admin Family])
+  end
+
+  before_action only: %i[new create destroy ] do
+    authorized?(%w[Admin])
+  end
+
   # GET /families or /families.json
   def index
     @families = Family.all
@@ -8,6 +16,9 @@ class FamiliesController < ApplicationController
 
   # GET /families/1 or /families/1.json
   def show
+    if authorized?(%w[ Admin Teacher Parent])
+      @account_type = Current.account_type
+    end
   end
 
   # GET /families/new
@@ -60,7 +71,11 @@ class FamiliesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_family
-      @family = Family.find(params.expect(:id))
+      if Current.account_type == "Family"
+        @family = Current.account
+      else
+        @family = Family.find(params.expect(:id))
+      end
     end
 
     # Only allow a list of trusted parameters through.
