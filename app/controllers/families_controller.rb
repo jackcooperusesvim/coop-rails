@@ -1,0 +1,85 @@
+class FamiliesController < ApplicationController
+  before_action :set_family, only: %i[ show edit update destroy ]
+
+  before_action only: %i[edit update ] do
+    authorized?(%w[ Admin Family])
+  end
+
+  before_action only: %i[new create destroy ] do
+    authorized?(%w[Admin])
+  end
+
+  # GET /families or /families.json
+  def index
+    @families = Family.all
+  end
+
+  # GET /families/1 or /families/1.json
+  def show
+    if authorized?(%w[ Admin Teacher Parent])
+      @account_type = Current.account_type
+    end
+  end
+
+  # GET /families/new
+  def new
+    @family = Family.new
+  end
+
+  # GET /families/1/edit
+  def edit
+  end
+
+  # POST /families or /families.json
+  def create
+    @family = Family.new(family_params)
+
+    respond_to do |format|
+      if @family.save
+        format.html { redirect_to @family, notice: "Family was successfully created." }
+        format.json { render :show, status: :created, location: @family }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @family.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PATCH/PUT /families/1 or /families/1.json
+  def update
+    respond_to do |format|
+      if @family.update(family_params)
+        format.html { redirect_to @family, notice: "Family was successfully updated." }
+        format.json { render :show, status: :ok, location: @family }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @family.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /families/1 or /families/1.json
+  def destroy
+    @family.destroy!
+
+    respond_to do |format|
+      format.html { redirect_to families_path, status: :see_other, notice: "Family was successfully destroyed." }
+      format.json { head :no_content }
+    end
+  end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_family
+      if Current.account_type == "Family"
+        @family = Current.account
+      else
+        @family = Family.find(params.expect(:id))
+      end
+    end
+
+    # Only allow a list of trusted parameters through.
+    def family_params
+      params.expect(family: [ :main_parent, :sec_parent, :last_name, :street, :city, :state, :zip, :phone1, :phone2, :phone3, :email, :note ])
+    end
+end

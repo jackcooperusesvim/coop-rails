@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  first_name: MyString
+  birthday: 2025-04-10
+  grade_offset: 1
+  account_family: one
+
+two:
+  first_name: MyString
+  birthday: 2025-04-10
+  grade_offset: 1
+  account_family: two
